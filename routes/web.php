@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmpregoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/cadastro_empresa', function () {
+    return view('auth.registerempresa');
+})->name('cadastro_empresa');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('welcome');
     })->name('dashboard');
     
     Route::get('/cadastro_emprego', function () {
@@ -34,5 +39,6 @@ Route::middleware([
         return view('empregos');
     })->name('empregos');
     
+    Route::post('/store',[EmpregoController::class, 'store'] )->name('store');
 
 });
